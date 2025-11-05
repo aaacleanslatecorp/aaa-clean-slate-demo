@@ -23,7 +23,7 @@ This demo is for **preview and internal review only**. It is not part of the off
 
 ## 🌐 Live Demo
 
-Once GitHub Pages is enabled, your demo will be live at:https://aaacleanslatecorp.github.io/aaa-clean-slate-demo/AAA_Clean_Slate_Course_Demo_Corrected.html
+Once GitHub Pages is enabled, your demo will be live at:  https://aaacleanslatecorp.github.io/aaa-clean-slate-demo/AAA_Clean_Slate_Course_Demo_Corrected.html
 
 ## 🧱 Built With
 
