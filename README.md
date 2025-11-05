@@ -24,4 +24,17 @@ This demo is for **preview and internal review only**. It is not part of the off
 ## 🌐 Live Demo
 
 Once GitHub Pages is enabled, your demo will be live at:
+*(Replace `yourusername` with your GitHub username.)*
+
+## 🧱 Built With
+
+- HTML5  
+- CSS3  
+- JavaScript (vanilla)  
+
+---
+
+© 2025 AAA CLEAN SLATE CORP  
+All rights reserved.
+
 
