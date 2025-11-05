@@ -2,50 +2,93 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>AAA Clean Slate – Course Demo</title>
+  <title>AAA CLEAN SLATE CORP – Dispatch Course Demo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <style>
+    :root {
+      --bg: #000;
+      --panel: #151515;
+      --accent: #c00000;
+      --text: #fff;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #000;
-      color: #fff;
+      background: var(--bg);
+      color: var(--text);
     }
+
+    /* top bar to match your site */
+    .topbar {
+      background: var(--accent);
+      padding: 14px 18px;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 0.04em;
+    }
+
+    .topbar small {
+      display: block;
+      font-weight: normal;
+      font-size: 0.7rem;
+      opacity: 0.9;
+    }
+
     .app {
       display: flex;
-      min-height: 100vh;
+      min-height: calc(100vh - 56px);
     }
+
     aside {
       width: 240px;
       background: #111;
       padding: 20px 15px;
     }
+
     aside h2 {
       margin-top: 0;
       color: #fff;
+      font-size: 1.1rem;
     }
+
     aside a {
       display: block;
       color: #fff;
       text-decoration: none;
       padding: 6px 0;
     }
+
     aside a:hover {
       color: #ff4d4d;
     }
+
     main {
       flex: 1;
       padding: 20px;
     }
+
     .card {
-      background: #151515;
+      background: var(--panel);
       border: 1px solid #222;
-      border-radius: 8px;
+      border-radius: 12px;
       padding: 20px;
       margin-bottom: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.25);
     }
 
+    .card h1, .card h2 {
+      margin-top: 0;
+    }
+
+    /* hero-style top card */
+    .hero-card {
+      background: radial-gradient(circle at top, #222 0%, #000 50%);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+
+    /* mobile menu / click fixes */
     @media (max-width: 900px) {
       .app {
         display: block;
@@ -54,9 +97,9 @@
       .menu-toggle {
         display: block;
         position: fixed;
-        top: 15px;
+        top: 65px;
         left: 15px;
-        background: #c00000;
+        background: var(--accent);
         color: #fff;
         border: none;
         padding: 10px 14px;
@@ -68,10 +111,10 @@
 
       aside {
         position: fixed;
-        top: 0;
+        top: 56px; /* under red bar */
         left: -260px;
         width: 240px;
-        height: 100vh;
+        height: calc(100vh - 56px);
         background: #111;
         overflow-y: auto;
         transition: left 0.3s ease;
@@ -95,10 +138,43 @@
     a, button, [onclick] {
       pointer-events: auto !important;
     }
+
+    .tag {
+      display: inline-block;
+      background: rgba(192,0,0,0.15);
+      border: 1px solid rgba(192,0,0,0.6);
+      color: #fff;
+      padding: 3px 10px;
+      border-radius: 99px;
+      font-size: 0.7rem;
+      margin-bottom: 10px;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      margin-top: 15px;
+      background: var(--accent);
+      color: #fff;
+      padding: 8px 16px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .cta-btn:hover {
+      background: #9e0000;
+    }
   </style>
 </head>
 <body>
 
+  <!-- red brand bar -->
+  <div class="topbar">
+    AAA CLEAN SLATE CORP
+    <small>Dispatch Course Demo — internal preview</small>
+  </div>
+
+  <!-- mobile toggle -->
   <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
 
   <div class="app">
@@ -111,9 +187,11 @@
     </aside>
 
     <main>
-      <div id="intro" class="card">
+      <div id="intro" class="card hero-card">
+        <span class="tag">Freight Dispatch Masterclass</span>
         <h1>AAA Clean Slate – Dispatch Course Demo</h1>
-        <p>This is a demo layout for your dispatch course preview.</p>
+        <p>This preview shows how your students will view lessons, downloads, and certificate verification.</p>
+        <a href="#modules" class="cta-btn">View Sample Modules</a>
       </div>
 
       <div id="modules" class="card">
@@ -122,18 +200,20 @@
           <li>Module 1 – Industry Basics</li>
           <li>Module 2 – Load Boards</li>
           <li>Module 3 – Carrier Setup</li>
-          <li>Module 4 – Billing & Invoicing</li>
+          <li>Module 4 – Billing &amp; Invoicing</li>
         </ul>
       </div>
 
       <div id="downloads" class="card">
         <h2>Downloads</h2>
-        <p>Here you can link your PDF, press release, or checklist.</p>
+        <p>Here you can link your PDF, press release, or printable course checklist.</p>
+        <p><em>Example:</em> <a href="#" style="color:#ff4d4d;">AAA Clean Slate Master Launch Checklist (PDF)</a></p>
       </div>
 
       <div id="verification" class="card">
         <h2>Badge Verification</h2>
         <p>Explain how students can verify their certificate from AAA CLEAN SLATE CORP.</p>
+        <p>You can link to your real verification page on your main website later.</p>
       </div>
     </main>
   </div>
