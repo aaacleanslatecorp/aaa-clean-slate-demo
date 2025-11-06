@@ -1,228 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>AAA CLEAN SLATE CORP – Dispatch Course Demo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AAA CLEAN SLATE CORP – Freight Dispatch Masterclass (Demo)</title>
+<style>
+  :root {
+    --red:#C8102E; --black:#0e0e0e; --bg:#ffffff; --text:#222; --muted:#666; --soft:#f6f7f8; --line:#e9e9ea; --green:#17803d;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; color:var(--text); background:var(--bg); }
+  .app { display:grid; grid-template-columns:280px 1fr; min-height:100vh; }
+  aside { background:#111; color:#fff; padding:18px 14px; position:sticky; top:0; height:100vh; overflow:auto; }
+  .brand { display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .brand img { width:46px; height:46px; object-fit:contain; border-radius:6px; background:#fff; padding:4px; }
+  .brand .title { font-weight:800; line-height:1.1; }
+  .tagline { color:#ffdadf; font-style:italic; font-size:12px; margin-top:4px; }
+  .nav h4 { margin:14px 0 6px; color:#ddd; font-size:12px; letter-spacing:.06em; text-transform:uppercase; }
+  .nav a { display:flex; align-items:center; gap:8px; padding:10px 10px; border-radius:8px; color:#fff; text-decoration:none; font-weight:600; }
+  .nav a:hover { background:#1b1b1b; }
+  .nav a.active { background:#C8102E; }
+  main { padding:22px 22px 48px; }
+  header.top { display:flex; justify-content:space-between; align-items:center; padding-bottom:14px; border-bottom:1px solid var(--line); margin-bottom:18px; }
+  .progress { height:10px; background:var(--soft); border-radius:999px; overflow:hidden; width:260px; }
+  .progress > span { display:block; height:100%; background:var(--green); width:20%; }
+  .pill { border:1px solid var(--red); color:var(--red); padding:4px 8px; border-radius:999px; font-size:12px; font-weight:700; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .card { background:#fff; border:1px solid var(--line); border-radius:12px; padding:14px; box-shadow:0 8px 24px rgba(0,0,0,.03); }
+  .card h3 { margin:0 0 6px; }
+  .muted { color:var(--muted); }
+  .cta { display:inline-block; background:var(--red); color:#fff; padding:10px 14px; border-radius:8px; text-decoration:none; font-weight:800; }
+  .cta.secondary { background:#444; }
+  .video { background:#000; border-radius:12px; color:#fff; min-height:180px; display:flex; align-items:center; justify-content:center; font-weight:800; }
+  .module-item { display:flex; justify-content:space-between; align-items:center; border:1px solid var(--line); border-radius:10px; padding:10px 12px; }
+  .locked { opacity:.55; }
+  .footer { color:#888; font-size:12px; text-align:center; margin-top:24px; }
+  @media (max-width: 900px) { .app { grid-template-columns:1fr; } aside { position:relative; height:auto; } }
 
-  <style>
-    :root {
-      --bg: #000;
-      --panel: #151515;
-      --accent: #c00000;
-      --text: #fff;
-    }
+  .video.mock { 
+    position: relative; 
+    overflow: hidden; 
+    background: linear-gradient(120deg, #0a0a0a, #202020, #0a0a0a); 
+    background-size: 200% 200%; 
+    animation: shimmer 3s ease-in-out infinite;
+    min-height: 200px;
+  }
+  .video.mock .play {
+    position: absolute; 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%); 
+    width: 84px; height: 84px; 
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 0 0 rgba(200,16,46,0.7);
+    animation: pulse 2s infinite;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .video.mock .play:after {
+    content: ''; 
+    display:block; 
+    margin-left: 4px;
+    width: 0; height: 0; 
+    border-top: 14px solid transparent; 
+    border-bottom: 14px solid transparent; 
+    border-left: 22px solid #ffffff;
+  }
+  @keyframes shimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(200,16,46,0.7); }
+    70% { box-shadow: 0 0 0 22px rgba(200,16,46,0); }
+    100% { box-shadow: 0 0 0 0 rgba(200,16,46,0); }
+  }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    /* top bar to match your site */
-    .topbar {
-      background: var(--accent);
-      padding: 14px 18px;
-      text-align: center;
-      font-weight: bold;
-      letter-spacing: 0.04em;
-    }
-
-    .topbar small {
-      display: block;
-      font-weight: normal;
-      font-size: 0.7rem;
-      opacity: 0.9;
-    }
-
-    .app {
-      display: flex;
-      min-height: calc(100vh - 56px);
-    }
-
-    aside {
-      width: 240px;
-      background: #111;
-      padding: 20px 15px;
-    }
-
-    aside h2 {
-      margin-top: 0;
-      color: #fff;
-      font-size: 1.1rem;
-    }
-
-    aside a {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      padding: 6px 0;
-    }
-
-    aside a:hover {
-      color: #ff4d4d;
-    }
-
-    main {
-      flex: 1;
-      padding: 20px;
-    }
-
-    .card {
-      background: var(--panel);
-      border: 1px solid #222;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 15px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.25);
-    }
-
-    .card h1, .card h2 {
-      margin-top: 0;
-    }
-
-    /* hero-style top card */
-    .hero-card {
-      background: radial-gradient(circle at top, #222 0%, #000 50%);
-      border: 1px solid rgba(255,255,255,0.03);
-    }
-
-    /* mobile menu / click fixes */
-    @media (max-width: 900px) {
-      .app {
-        display: block;
-      }
-
-      .menu-toggle {
-        display: block;
-        position: fixed;
-        top: 65px;
-        left: 15px;
-        background: var(--accent);
-        color: #fff;
-        border: none;
-        padding: 10px 14px;
-        border-radius: 6px;
-        z-index: 10001;
-        cursor: pointer;
-        font-size: 1.1em;
-      }
-
-      aside {
-        position: fixed;
-        top: 56px; /* under red bar */
-        left: -260px;
-        width: 240px;
-        height: calc(100vh - 56px);
-        background: #111;
-        overflow-y: auto;
-        transition: left 0.3s ease;
-        z-index: 10000;
-      }
-      aside.open {
-        left: 0;
-      }
-
-      main {
-        margin-top: 60px;
-      }
-
-      .card, section {
-        position: relative;
-        z-index: 1;
-        pointer-events: auto;
-      }
-    }
-
-    a, button, [onclick] {
-      pointer-events: auto !important;
-    }
-
-    .tag {
-      display: inline-block;
-      background: rgba(192,0,0,0.15);
-      border: 1px solid rgba(192,0,0,0.6);
-      color: #fff;
-      padding: 3px 10px;
-      border-radius: 99px;
-      font-size: 0.7rem;
-      margin-bottom: 10px;
-    }
-
-    .cta-btn {
-      display: inline-block;
-      margin-top: 15px;
-      background: var(--accent);
-      color: #fff;
-      padding: 8px 16px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
-    .cta-btn:hover {
-      background: #9e0000;
-    }
-  </style>
+</style>
 </head>
 <body>
-
-  <!-- red brand bar -->
-  <div class="topbar">
-    AAA CLEAN SLATE CORP
-    <small>Dispatch Course Demo — internal preview</small>
-  </div>
-
-  <!-- mobile toggle -->
-  <button class="menu-toggle" onclick="toggleMenu()">☰ Menu</button>
-
-  <div class="app">
-    <aside>
-      <h2>Course Demo</h2>
-      <a href="#intro">Introduction</a>
-      <a href="#modules">Modules</a>
-      <a href="#downloads">Downloads</a>
-      <a href="#verification">Badge Verification</a>
-    </aside>
-
-    <main>
-      <div id="intro" class="card hero-card">
-        <span class="tag">Freight Dispatch Masterclass</span>
-        <h1>AAA Clean Slate – Dispatch Course Demo</h1>
-        <p>This preview shows how your students will view lessons, downloads, and certificate verification.</p>
-        <a href="#modules" class="cta-btn">View Sample Modules</a>
+<div class="app">
+  <aside>
+    <div class="brand">
+      <img src='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QCMRXhpZgAATU0AKgAAAAgABQESAAMAAAABAAEAAAEaAAUAAAABAAAASgEbAAUAAAABAAAAUgEoAAMAAAABAAIAAIdpAAQAAAABAAAAWgAAAAAAAABIAAAAAQAAAEgAAAABAAOgAQADAAAAAQABAACgAgAEAAAAAQAAAkmgAwAEAAAAAQAAAjkAAAAA/8AAEQgCOQJJAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMAAgICAgICAwICAwUDAwMFBgUFBQUGCAYGBgYGCAoICAgICAgKCgoKCgoKCgwMDAwMDA4ODg4ODw8PDw8PDw8PD//bAEMBAgMDBAQEBwQEBxALCQsQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEP/dAAQAJf/aAAwDAQACEQMRAD8A/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9D+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/0f5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/S/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9P+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/1P5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/V/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9b+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/1/5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Q/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9H+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKK6bVvCur6JY22oakixxXaq0YDqz4cBhlRkjKnIzXM0AFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFAH//0v5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAN7w3FHPrljDNGsqNKoZHGQR3BHoe9bPje1tra702S2t47b7Tp9vM6xLtUu4JJA7Z71l+E/+Rhsf+uq/zrc+IH/Hxox/6hdp/wCgmgDgKKKKACiiigAooooA9i+JX+ptv+vXTP8A0mavHa9i+JX+ptv+vXTP/SZq8doAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/T/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA6Twtx4i0/wD67J/Otvx7zPox/wCoXaf+gmsPwt/yMOn/APXdP61ueO/9fo3/AGC7T/0E1p0A4Cit/S/DOu6yAdNsZrgHuiEj867q0+DnjK4IEto8QOD8wUdfUMymosK55NRXv8XwM1j5fNyM9cSQj+bGtqP4CqwG+aVT3PmxEZ/AH+daezkR7SHc+ZqK+n1+AdqT813Mo9Q0bfpgUp/Z8t2+7q0if70Sn9QwpKnJ9Be0h3OB+JX+ptv+vXTP/SZq8dr6A+Jvh+/L3qWq+dHo9vpwmYYBCCFow2OTjPXHTNeCyRPEBvBG4ZGRwQe4NS42NE00mmQ0UUVIwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD//U/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA6XwjG8viTTkjRnLTpgKMk89hXr2u+BdVuLnT7q9hjiis9MhUrLNFGTPEpHlkMwI5IyTxxjrXn3w4QzeJ4LVJTby3KPEkq8NGXADMp7ELuwe3WvV7vxn8HNKkKWehG/dMjzHiDliCRkvKxJJ7nGPSrS0MpPyO+0vxrpmi6Ra6XBDbRJbRquw6jajJAAJwC2STkn61YPxP0wH96LVMdzexn/0GM155pfxg8NnUbex03wzHbpNIkYZfLVgXIGQAgz16ZrrPGnxZs/CWuy6KumNdNAqlmDhBlhnAG1s8Hk1vzW6HJKN3Zo2B8UdCHW5sx9bo5/SKpB8VPDX8d3aj6XJI/WKvOP8AhoCxcYfQiR/12U/zjpP+F5eHn5n8OAn/AHoif1StefzH7H+6e46J4mtfEETTaUYblEYKxjnB2kjIBG0EZ+ldKSxHIx+NeIf8LI8N6VoUHjaz0p4DqMptWhQohJgy24kAAgZ44BOak0f4zaR4lum0eG0ntJ545BG7lWXeEJAOMEE44NUpXOSdGfRbB41hlEXjmZkYJJp1kAxBAJBJOD0OO+K+ddZt4h4G8P3WMStNexlvVVZGA/Ak4+pr2zx/d3DalqUDSsyN4eDlSTtLGRRnHTOO5Ga8d1wf8W98OcdbrUP5x1zVT06PwI84ooornNwooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/1f5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKcqsxwBW9ZX62OHhsYpZh/FOplA+inC/mDQB2Xwr0vULzxGbq1t3dbe2uWDAHaXMTKo3dASTxk1JZ/CDx7ebc6d9nB6NNIqDoO2Sf0rAbxr40LIY9SnhWPlViPloPoqAD9K7TR/jP4203CXipqKAf8ALVNrn/gSAH8810QXczba+HU6zwr8EdZ07WLLVNWvIBHaSpI0cYdydhzjOAoyR1zWx44+DmreJvEF5rtlqMSi6YERyK4IwoGMjIPT0rovCfxas/EwubZrBre/t4GmERcEShBlgrYByAMgEc+tblj8RIdcAPhbSrvUh0aRkWCJD6NI5xn6CtFGPc4ZTq32Pn2f4E+NYh+5e2mA64kII/AiseX4PePosldPEqr3jlQg/TkGvruBPFF6M3j29grDlYVM7gdgXfaoP0Brdgtfs4y0skrHGWdsk49hgD8BT5EL6xM+YNe+HHi0eBdD0eytDcz2808s8aEEo0uMZzgHAHNc94N+HnjLS/EFtqOo6ZJb21sJHd2K4AEbehz9K+oJbV9S8SXUU08yW9rbwNGkUjRjfIzlmO3GThQBngDPFaV5ZrFp10iyyNmKTJZtx+43cijlK9s7a6ngnj//AJDOo/8AYtj/ANGpXk+uf8k98Pf9fd9/NK9Y8f8A/IZ1H/sWx/6NSvJ9c/5J74e/6+77+aVlVOun8KPNaKKK5zo6hRRRQSFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB//W/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD134cWkqTte2817bSOkgLWMC3EmAyjBDAgDnqK9kDajjH9qeIv/BbH/wDE15/4DsJX07Tmgtru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igAooooAKKKKACiiigAooooAKXJ6UlFACk5NKpwabR1oAfupNxxTaKBhnvRnvRRQIduNLvNMooAUknrSUUUALk0ZNJRQMKKKKBCgkU7cP8//AKqZRQA/dRuplFAD93vSbjTaKYx+6m5NJRSELk0ZNJRQAuTRk0lFAC5NLuNNooAXcaSiigAooooGFHSiigQuTSZ7UUUAP3UbqZRQMfupuTSUUAODEU3OaKKBC5NGTSUUALk0ZNJRQAU4Gm0UAP3Um402imApOaMnOaSikAdaKKKACiiigAooooAKKKKACiiigD//1v5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/X/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9D+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/0f5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/S/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9P+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/1P5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/V/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9b+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/1/5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Q/n/ooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA/9H+f+iiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD/0v5/6KKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKAP/Z' alt='AAA Logo'>
+      <div>
+        <div class="title">AAA CLEAN SLATE CORP</div>
+        <div class="tagline">“Every great dispatcher was once a beginner who refused to quit.”</div>
       </div>
+    </div>
+    <nav class="nav">
+      <h4>Course</h4>
+      <a href="#dashboard" class="active" onclick="show('dashboard', this)">Dashboard</a>
+      <a href="#module1" onclick="show('module1', this)">Module 1 – Industry Fundamentals</a>
+      <a href="#module2" onclick="show('module2', this)">Module 2 – Tools, Accounts & Setup</a>
+      <a href="#final" onclick="show('final', this)">Final Exam & Certificate</a>
+      <h4>Support</h4>
+      <a href="#downloads" onclick="show('downloads', this)">Downloads</a>
+      <a href="#verify" onclick="show('verify', this)">Verification</a>
+      <a href="#help" onclick="show('help', this)">Contact</a>
+    </nav>
+  </aside>
 
-      <div id="modules" class="card">
-        <h2>Modules</h2>
+  <main>
+    <header class="top">
+      <div>
+        <div style="font-weight:800; font-size:20px;">Freight Dispatch Masterclass – Demo Preview</div>
+        <div class="muted">Instructor: Anthony Johnson • Self-paced • Lifetime access</div>
+      </div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="progress"><span id="progbar" style="width: 0%;"></span></div>
+        <span class="pill" id="progressText">0% Complete</span>
+      </div>
+    </header>
+
+    <!-- Dashboard -->
+    <section id="dashboard">
+      <div class="grid">
+        <div class="card">
+          <h3>Welcome to the Course 🎓</h3>
+          <div class="video">Video Placeholder</div>
+          <p class="muted" style="margin-top:8px;">This is an interactive demo. Click modules in the sidebar to preview lessons, downloads, and the final certificate flow.</p>
+          <a class="cta" href="#module1" onclick="show('module1')">Start Module 1</a>
+        </div>
+        <div class="card">
+          <h3>Your Modules</h3>
+          <div class="module-item">
+            <span>Module 1 – Industry Fundamentals</span>
+            <a class="cta" href="#module1" onclick="show('module1')">Open</a>
+          </div>
+          <div class="module-item" style="margin-top:8px;">
+            <span>Module 2 – Tools, Accounts & Setup</span>
+            <a class="cta" href="#module2" onclick="show('module2')">Open</a>
+          </div>
+          <div class="module-item locked" style="margin-top:8px;">
+            <span>Module 3 – Load Boards & Sourcing</span>
+            <span>Locked</span>
+          </div>
+          <div class="module-item locked" style="margin-top:8px;">
+            <span>Modules 4–10 – Coming in full course</span>
+            <span>Locked</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Certification</h3>
+          <p>Pass the final exam to unlock your official <b>AAA CLEAN SLATE CORP Certificate of Completion</b> and a <b>shareable digital badge</b>.</p>
+          <a class="cta secondary" href="#final" onclick="show('final')">Preview Certification</a>
+        </div>
+      </div>
+      <div class="footer">Course Ref: FDM-2025-CS-01</div>
+    </section>
+
+    <!-- Module 1 -->
+    <section id="module1" style="display:none;">
+      <div class="grid">
+        <div class="card">
+          <h3>Module 1 – Industry Fundamentals</h3>
+          <p class="muted">Overview: Freight ecosystem, roles (shipper, broker, carrier, dispatcher), documents, safety & compliance basics.</p>
+          <div class="video mock"><div class="play" title="Demo video thumbnail"></div></div>
+          <p>✅ Lesson Objectives:</p>
+          <ul>
+            <li>Understand the dispatcher’s role and responsibilities</li>
+            <li>Identify key industry players and workflows</li>
+            <li>Recognize common documents and acronyms</li>
+          </ul>
+          <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="cta" href="Module_1_Workbook_Sample.pdf" target="_blank">Download Workbook (PDF)</a>
+            <a class="cta secondary" href="#module2" onclick="complete('module1'); show('module2')">Mark Complete → Module 2</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Resources</h3>
+          <ul class="muted">
+            <li>Glossary (A–Z) – included in full course</li>
+            <li>Industry orgs & directories – included in full course</li>
+            <li>Safety & compliance checklist – included in full course</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Module 2 -->
+    <section id="module2" style="display:none;">
+      <div class="grid">
+        <div class="card">
+          <h3>Module 2 – Tools, Accounts & Setup</h3>
+          <p class="muted">Overview: Phones, email, TMS/CRM, file storage, e-signature, banking, compliance accounts, and branding.</p>
+          <div class="video mock"><div class="play" title="Demo video thumbnail"></div></div>
+          <p>✅ Lesson Objectives:</p>
+          <ul>
+            <li>Set up core tools (email, VoIP, storage, e-sign, TMS)</li>
+            <li>Create dispatch folders & naming conventions</li>
+            <li>Prepare bank & payment workflows</li>
+          </ul>
+          <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="cta" href="Module_2_Workbook_Sample.pdf" target="_blank">Download Workbook (PDF)</a>
+            <a class="cta secondary" href="#final" onclick="complete('module2'); show('final')">Mark Complete → Final Exam</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Templates</h3>
+          <ul class="muted">
+            <li>Dispatcher Onboarding Form – included</li>
+            <li>Intake Script – included</li>
+            <li>Folder structure template – included</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    
+    <!-- Module 3 -->
+    <section id="module3" style="display:none;">
+      <div class="grid">
+        <div class="card">
+          <h3>Module 3 – Load Boards & Sourcing</h3>
+          <p class="muted">Overview: Finding freight, optimizing searches, understanding lanes & rates, and posting strategies.</p>
+          <div class="video mock"><div class="play" title="Demo video thumbnail"></div></div>
+          <p>✅ Lesson Objectives:</p>
+          <ul>
+            <li>Search and filter effectively on major load boards</li>
+            <li>Evaluate lanes, seasonality, and rate trends</li>
+            <li>Craft compelling posts to attract quality carriers</li>
+          </ul>
+          <div style="margin-top:8px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="cta" href="Module_3_Workbook_Sample.pdf" target="_blank">Download Workbook (PDF)</a>
+            <a class="cta secondary" href="#final" onclick="complete('module3'); show('final')">Mark Complete → Final Exam</a>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Quick Quiz – 3 Questions</h3>
+          <div id="quiz">
+            <div style="margin-bottom:10px;">
+              <strong>Q1.</strong> Which factor most strongly impacts lane pricing?<br>
+              <label><input type="radio" name="q1" value="a"> Color of the truck</label><br>
+              <label><input type="radio" name="q1" value="b"> Seasonality & regional capacity</label><br>
+              <label><input type="radio" name="q1" value="c"> Driver’s favorite music</label>
+            </div>
+            <div style="margin-bottom:10px;">
+              <strong>Q2.</strong> A good first step when searching a new lane is to:<br>
+              <label><input type="radio" name="q2" value="a"> Ignore deadhead distance</label><br>
+              <label><input type="radio" name="q2" value="b"> Check historic rates & recent posts</label><br>
+              <label><input type="radio" name="q2" value="c"> Only search exact city names</label>
+            </div>
+            <div style="margin-bottom:10px;">
+              <strong>Q3.</strong> When posting a truck, include:<br>
+              <label><input type="radio" name="q3" value="a"> Equipment, dates, and preferred lanes</label><br>
+              <label><input type="radio" name="q3" value="b"> Only a motivational quote</label><br>
+              <label><input type="radio" name="q3" value="c"> No contact info</label>
+            </div>
+            <button class="cta" onclick="gradeQuiz()">Check Answers</button>
+            <div id="quizResult" class="muted" style="margin-top:8px;">Score: —</div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+
+    <!-- Final Exam -->
+    <section id="final" style="display:none;">
+      <div class="grid">
+        <div class="card">
+          <h3>Final Exam – Preview</h3>
+          <p class="muted">Download the sample exam and click “Submit Exam” to simulate completion.</p>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin:8px 0;">
+            <a class="cta" href="Final_Exam_Freight_Dispatch_Masterclass.pdf" target="_blank">Download Exam (PDF)</a>
+            <button class="cta" onclick="submitExam()">Submit Exam (Demo)</button>
+          </div>
+          <div id="examStatus" class="muted">Status: Not submitted</div>
+        </div>
+        <div class="card">
+          <h3>Certificate – Preview</h3>
+          <p>Upon passing, your certificate becomes available here.</p>
+          <a class='cta' href='AAA_CLEAN_SLATE_Certificate_of_Completion_Watermarked.pdf' target='_blank'>View Sample Certificate (PDF)</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Downloads -->
+    <section id="downloads" style="display:none;">
+      <div class="grid">
+        <div class="card">
+          <h3>Key Downloads</h3>
+          <ul>
+            <li><a href="Module_1_Workbook_Sample.pdf" target="_blank">Module 1 – Workbook (PDF)</a></li>
+            <li><a href="Module_2_Workbook_Sample.pdf" target="_blank">Module 2 – Workbook (PDF)</a></li>
+            <li><a href='AAA_CLEAN_SLATE_Certificate_of_Completion_Watermarked.pdf' target='_blank'>Sample Certificate (PDF)</a></li>
+            <li><a href="AAA_Clean_Slate_Enroll_Landing_Page.html" target="_blank">Course Enrollment Page (HTML)</a></li>
+            <li><a href="aaa_badge_verification_landing_VERIFIED.html" target="_blank">Verification Portal (HTML)</a></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Support</h3>
+          <p class="muted">Questions? Call <b>(877) 245-0157</b> or email <b>info@aaacleanslatecorp.com</b>.</p>
+          <a class="cta secondary" href="#help" onclick="show('help')">Contact & FAQ</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Help -->
+    <section id="help" style="display:none;">
+      <div class="card">
+        <h3>Contact & FAQ</h3>
+        <p>We’re here to help you succeed.</p>
         <ul>
-          <li>Module 1 – Industry Basics</li>
-          <li>Module 2 – Load Boards</li>
-          <li>Module 3 – Carrier Setup</li>
-          <li>Module 4 – Billing &amp; Invoicing</li>
+          <li><b>Phone:</b> (877) 245-0157</li>
+          <li><b>Email:</b> info@aaacleanslatecorp.com</li>
+          <li><b>Hours:</b> Mon–Fri 9:00am–5:00pm (ET)</li>
         </ul>
+        <p class="muted">You’ll receive lifetime access and updates to the course materials.</p>
       </div>
+    </section>
+  </main>
+</div>
 
-      <div id="downloads" class="card">
-        <h2>Downloads</h2>
-        <p>Here you can link your PDF, press release, or printable course checklist.</p>
-        <p><em>Example:</em> <a href="#" style="color:#ff4d4d;">AAA Clean Slate Master Launch Checklist (PDF)</a></p>
-      </div>
+<script>
+  function show(id, el) {
+    document.querySelectorAll('main section').forEach(s => s.style.display = 'none');
+    const sec = document.getElementById(id);
+    if (sec) sec.style.display = 'block';
+    document.querySelectorAll('aside .nav a').forEach(a => a.classList.remove('active'));
+    if (el && el.tagName) el.classList.add('active');
+    window.scrollTo(0,0);
+  }
+  let done = { module1:false, module2:false, module3:false };
+  function complete(mod) {
+    done[mod] = true;
+    const pct = (Object.values(done).filter(v => v).length / 3) * 100;
+    document.getElementById('progbar').style.width = pct + '%';
+    document.getElementById('progressText').textContent = Math.round(pct) + '% Complete';
+  }
+  function submitExam() {
+    const el = document.getElementById('examStatus');
+    el.textContent = 'Status: Submitted – Passed (Demo)';
+    el.style.color = '#17803d';
+    alert('Exam submitted (demo). Certificate unlocked!');
+  }
 
-      <div id="verification" class="card">
-        <h2>Badge Verification</h2>
-        <p>Explain how students can verify their certificate from AAA CLEAN SLATE CORP.</p>
-        <p>You can link to your real verification page on your main website later.</p>
-      </div>
-    </main>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      const sidebar = document.querySelector('aside');
-      sidebar.classList.toggle('open');
-    }
-  </script>
+  function gradeQuiz(){
+    const a1 = (document.querySelector('input[name="q1"]:checked')||{}).value === 'b';
+    const a2 = (document.querySelector('input[name="q2"]:checked')||{}).value === 'b';
+    const a3 = (document.querySelector('input[name="q3"]:checked')||{}).value === 'a';
+    const score = [a1,a2,a3].filter(Boolean).length;
+    const el = document.getElementById('quizResult');
+    el.textContent = 'Score: ' + score + '/3 ' + (score === 3 ? '✅ Great job!' : '— keep practicing.');
+  }
+</script>
 </body>
 </html>
